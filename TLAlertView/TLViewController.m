@@ -29,7 +29,9 @@
     TLAlertView *alertView = [TLAlertView showInView:self.view withTitle:@"Sorry, there was an error" message:@"This is some message that you might display to the user" confirmButtonTitle:@"OK" cancelButtonTitle:@"Cancel"];
     [alertView handleCancel:^{
         NSLog(@"cancel");
-    } handleConfirm:nil];
+    } handleConfirm:^{
+        NSLog(@"confirm");
+    }];
     [alertView show];
 }
 

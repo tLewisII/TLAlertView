@@ -85,8 +85,6 @@ typedef enum {
         if(_confirmButton)
             [self addSubview:_confirmButton];
         [self addSubview:_cancelButton];
-        NSLog(@"%f",_cancelButton.bounds.size.width);
-        NSLog(@"%f",_confirmButton.bounds.size.width);
     }
     return self;
 }
