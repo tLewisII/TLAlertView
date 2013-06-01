@@ -17,6 +17,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)didReceiveMemoryWarning
@@ -25,11 +26,11 @@
     // Dispose of any resources that can be recreated.
 }
 - (IBAction)showView:(id)sender {
-    TLAlertView *v = [TLAlertView showInView:self.view withTitle:@"Title" message:@"This is some message that you might display to the user" confirmButtonTitle:@"OK" cancelButtonTitle:@"Cancel"];
-    [v handleCancel:^{
+    TLAlertView *alertView = [TLAlertView showInView:self.view withTitle:@"Sorry, there was an error" message:@"This is some message that you might display to the user" confirmButtonTitle:@"OK" cancelButtonTitle:@"Cancel"];
+    [alertView handleCancel:^{
         NSLog(@"cancel");
     } handleConfirm:nil];
-    [v show];
+    [alertView show];
 }
 
 @end

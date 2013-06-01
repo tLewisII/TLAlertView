@@ -29,32 +29,38 @@ typedef enum {
 
 @end
 @implementation TLAlertView
-
+#pragma mark - Initializers
 -(id)initWithTitle:(NSString *)title message:(NSString *)message inView:(UIView *)view cancelButtonTitle:(NSString *)cancelButton confirmButton:(NSString *)confirmButton {
     if(self = [super initWithFrame:CGRectMake(CGRectGetMinX(view.frame) + 20, CGRectGetMinY(view.frame) - 175, CGRectGetWidth(view.frame) - 40, 150)]) {
-        _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.bounds) + 10, CGRectGetMinY(self.bounds) + 10, CGRectGetWidth(self.bounds) - 20, 21)];
+        _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.bounds) + 10, CGRectGetMinY(self.bounds) + 10, CGRectGetWidth(self.bounds) - 20, 24)];
         _titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:24];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
         _titleLabel.backgroundColor = [UIColor clearColor];
         _titleLabel.textColor = [UIColor whiteColor];
+        _titleLabel.adjustsFontSizeToFitWidth = YES;
         
-        _messageLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.bounds) + 10, CGRectGetMaxY(_titleLabel.frame) + 10, CGRectGetWidth(self.bounds) - 20, 42)];
+        _messageLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.bounds) + 10, CGRectGetMaxY(_titleLabel.frame) + 5, CGRectGetWidth(self.bounds) - 20, 48)];
         _messageLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:18];
         _messageLabel.textAlignment = NSTextAlignmentCenter;
         _messageLabel.backgroundColor = [UIColor clearColor];
         _messageLabel.numberOfLines = 0;
         _messageLabel.textColor = [UIColor whiteColor];
+        _messageLabel.adjustsFontSizeToFitWidth = YES;
         
         if(cancelButton && confirmButton) {
             _cancelButton = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.bounds) + 10, CGRectGetMaxY(self.bounds) - 54,  (CGRectGetWidth(self.bounds) /2) - 20, 44)];
             _cancelButton.backgroundColor = [UIColor colorWithRed:0.000 green:0.502 blue:1.000 alpha:1.000];
             _cancelButton.tag = kCancelButtonTag;
             _cancelButton.titleLabel.font = [UIFont fontWithName:@"Helvetica-BoldOblique" size:20];
+            _cancelButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+            _cancelButton.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 5);
             
             _confirmButton = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.bounds) - (CGRectGetWidth(self.bounds) /2) + 10, CGRectGetMaxY(self.bounds) - 54, (CGRectGetWidth(self.bounds) /2) - 20, 44)];
             _confirmButton.backgroundColor = [UIColor colorWithRed:0.000 green:0.502 blue:1.000 alpha:1.000];
             _confirmButton.tag = kConfirmbuttomTag;
             _confirmButton.titleLabel.font = [UIFont fontWithName:@"Helvetica-BoldOblique" size:20];
+            _cancelButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+            _confirmButton.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 5);
         }
         else {
             _cancelButton = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.bounds) + 10, CGRectGetMaxY(self.bounds) - 54,  CGRectGetWidth(self.bounds) - 20, 44)];
@@ -65,7 +71,7 @@ typedef enum {
         
         self.layer.edgeAntialiasingMask = kCALayerLeftEdge | kCALayerRightEdge;
         self.backgroundColor = [UIColor clearColor];
-    
+        
         _viewToShowIn = view;
         _titleLabel.text = title;
         _messageLabel.text = message;
@@ -79,29 +85,17 @@ typedef enum {
         if(_confirmButton)
             [self addSubview:_confirmButton];
         [self addSubview:_cancelButton];
+        NSLog(@"%f",_cancelButton.bounds.size.width);
+        NSLog(@"%f",_confirmButton.bounds.size.width);
     }
     return self;
 }
 
-- (void)drawRect:(CGRect)rect
-{
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGRect inset = CGRectInset(self.bounds, 2, 2);
-    UIColor *rectColor = [UIColor colorWithRed:0.174 green:0.182 blue:0.173 alpha:1.000];
-    CGContextSaveGState(context);
-    
-    CGContextSetFillColorWithColor(context, rectColor.CGColor);
-    CGContextFillRect(context, self.bounds);
-    CGContextRestoreGState(context);
-    CGContextSetStrokeColorWithColor(context, [UIColor whiteColor].CGColor);
-    CGContextStrokeRect(context, rectFor1PxStroke(inset));
-    
-    
-}
 
 +(TLAlertView *)showInView:(UIView *)view withTitle:(NSString *)title message:(NSString *)message confirmButtonTitle:(NSString *)confim cancelButtonTitle:(NSString *)cancel {
     return [[TLAlertView alloc]initWithTitle:title message:message inView:view cancelButtonTitle:cancel confirmButton:confim];
 }
+#pragma mark - show in view
 //Shows the view and also disables user interaction for the all the subviews that are in the presenting view, thus preserving a modal presentation
 -(void)show {
     [self.viewToShowIn.subviews enumerateObjectsUsingBlock:^(UIView *obj, NSUInteger idx, BOOL *stop) {
@@ -113,6 +107,7 @@ typedef enum {
     } completion:nil];
     
 }
+#pragma mark - dismiss
 -(void)executeCompletionBlock:(UIButton *)sender {
     CATransform3D transformation = CATransform3DIdentity;
     CATransform3D xRotation = CATransform3DMakeRotation(180*M_PI/180.0, 1.0, 0, 0);
@@ -142,13 +137,29 @@ typedef enum {
     }];
     
 }
-
+#pragma mark - set completion blocks
 -(void)handleCancel:(TLCompletionBlock)cancelBlock handleConfirm:(TLCompletionBlock)confirmBlock {
     cancelCompletionBlock = cancelBlock;
     confirmCompletionBlock = confirmBlock;
 }
-
+#pragma mark - drawing
 CGRect rectFor1PxStroke(CGRect rect) {
     return CGRectMake(rect.origin.x + 0.5, rect.origin.y + 0.5, rect.size.width - 1, rect.size.height - 1);
+}
+
+- (void)drawRect:(CGRect)rect
+{
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGRect inset = CGRectInset(self.bounds, 2, 2);
+    UIColor *rectColor = [UIColor colorWithRed:0.174 green:0.182 blue:0.173 alpha:1.000];
+    CGContextSaveGState(context);
+    
+    CGContextSetFillColorWithColor(context, rectColor.CGColor);
+    CGContextFillRect(context, self.bounds);
+    CGContextRestoreGState(context);
+    CGContextSetStrokeColorWithColor(context, [UIColor whiteColor].CGColor);
+    CGContextStrokeRect(context, rectFor1PxStroke(inset));
+    
+    
 }
 @end
