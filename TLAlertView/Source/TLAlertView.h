@@ -12,12 +12,12 @@
 typedef void ((^TLCompletionBlock)()); //Used as the completion block
 
 //Must have a non null cancel button title,, but null confirm is ok.
-+(TLAlertView *)__attribute__((nonnull(1,2,3,5)))showInView:(UIView *)view withTitle:(NSString *)title message:(NSString *)message confirmButtonTitle:(NSString *)confirm cancelButtonTitle:(NSString *)cancel;
++ (TLAlertView *)__attribute__((nonnull(1, 2, 3, 5))) showInView:(UIView *)view withTitle:(NSString *)title message:(NSString *)message confirmButtonTitle:(NSString *)confirm cancelButtonTitle:(NSString *)cancel;
 
 //easy one shot call to handle both confirm or cancel buttons, either can be nil;
--(void)handleCancel:(TLCompletionBlock)cancelBlock handleConfirm:(TLCompletionBlock)confirmBlock;
+- (void)handleCancel:(TLCompletionBlock)cancelBlock handleConfirm:(TLCompletionBlock)confirmBlock;
 
 //Presents the alert in the view that was passed in
--(void)show;
+- (void)show;
 
 @end

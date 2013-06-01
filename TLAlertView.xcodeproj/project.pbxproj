@@ -90,13 +90,9 @@
 		DB7476C61759614A007EBDF0 /* TLAlertView */ = {
 			isa = PBXGroup;
 			children = (
-				DB7476CF1759614A007EBDF0 /* TLAppDelegate.h */,
-				DB7476D01759614A007EBDF0 /* TLAppDelegate.m */,
-				DB7476D81759614A007EBDF0 /* MainStoryboard.storyboard */,
-				DB7476DB1759614A007EBDF0 /* TLViewController.h */,
-				DB7476DC1759614A007EBDF0 /* TLViewController.m */,
-				DB7476E317596179007EBDF0 /* TLAlertView.h */,
-				DB7476E417596179007EBDF0 /* TLAlertView.m */,
+				DBC9EAC2175A8F3000E7DABD /* Delegate and Storyboard */,
+				DBC9EAC3175A8F4300E7DABD /* View Controller */,
+				DBC9EAC1175A83A100E7DABD /* Source */,
 				DB7476C71759614A007EBDF0 /* Supporting Files */,
 			);
 			path = TLAlertView;
@@ -114,6 +110,34 @@
 				DB7476D61759614A007EBDF0 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DBC9EAC1175A83A100E7DABD /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				DB7476E317596179007EBDF0 /* TLAlertView.h */,
+				DB7476E417596179007EBDF0 /* TLAlertView.m */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		DBC9EAC2175A8F3000E7DABD /* Delegate and Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				DB7476CF1759614A007EBDF0 /* TLAppDelegate.h */,
+				DB7476D01759614A007EBDF0 /* TLAppDelegate.m */,
+				DB7476D81759614A007EBDF0 /* MainStoryboard.storyboard */,
+			);
+			name = "Delegate and Storyboard";
+			sourceTree = "<group>";
+		};
+		DBC9EAC3175A8F4300E7DABD /* View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				DB7476DB1759614A007EBDF0 /* TLViewController.h */,
+				DB7476DC1759614A007EBDF0 /* TLViewController.m */,
+			);
+			name = "View Controller";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
