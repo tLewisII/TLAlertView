@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = 'TLAlertView'
-  s.version  = '1.0.1'
+  s.version  = '1.0.2'
   s.license  = 'MIT'
   s.summary  = 'A simple replacement for UIAlertView with block based completion methods and a 3D dismiss animation.'
   s.homepage = 'https://github.com/tLewisII/TLAlertView'
