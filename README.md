@@ -1,5 +1,7 @@
 <h1>TLAlertView</h1>
 A simple replacement for UIAlertView with block based completion methods and a 3D dismiss animation.<br><br>
+![Two Buttons](http://ploverproductions.com/wp-content/uploads/2013/06/TLAlertView2Buttons.png?raw=true)&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+![One Buttons](http://ploverproductions.com/wp-content/uploads/2013/06/TLAlertView1Button.png?raw=true)
 <h2>Installation</h2>
 <hr>
 The preferred method is cocoapods, www.cocoapods.org, which you would then `#import <TLAlertView/TLAlertView.h>`, or you can just drop in TLAlertView.h wherever you need it and include the QuartzCore framework
@@ -17,7 +19,7 @@ Use as a replacement for UIAlertView wherever you need it.<br><br>
 
 
 <h1>License</h1>
-If you use TLAlertView and you like it, feel free to let me know, terry@ploverproductions.com. If you have any issue or want to make improvements, submit a pull request.<br><br>
+If you use TLAlertView and you like it, feel free to let me know, <terry@ploverproductions.com>. If you have any issue or want to make improvements, submit a pull request.<br><br>
 
 The MIT License (MIT)
 Copyright (c) 2013 Terry Lewis II
