@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB5EE8AE17597B6000DC9F4C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB5EE8AD17597B6000DC9F4C /* QuartzCore.framework */; };
 		DB7476C11759614A007EBDF0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB7476C01759614A007EBDF0 /* UIKit.framework */; };
 		DB7476C31759614A007EBDF0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB7476C21759614A007EBDF0 /* Foundation.framework */; };
 		DB7476C51759614A007EBDF0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB7476C41759614A007EBDF0 /* CoreGraphics.framework */; };
@@ -18,9 +19,11 @@
 		DB7476D71759614A007EBDF0 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB7476D61759614A007EBDF0 /* Default-568h@2x.png */; };
 		DB7476DA1759614A007EBDF0 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB7476D81759614A007EBDF0 /* MainStoryboard.storyboard */; };
 		DB7476DD1759614A007EBDF0 /* TLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB7476DC1759614A007EBDF0 /* TLViewController.m */; };
+		DB7476E517596179007EBDF0 /* TLAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB7476E417596179007EBDF0 /* TLAlertView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DB5EE8AD17597B6000DC9F4C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		DB7476BD1759614A007EBDF0 /* TLAlertView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TLAlertView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB7476C01759614A007EBDF0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		DB7476C21759614A007EBDF0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -37,6 +40,8 @@
 		DB7476D91759614A007EBDF0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		DB7476DB1759614A007EBDF0 /* TLViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TLViewController.h; sourceTree = "<group>"; };
 		DB7476DC1759614A007EBDF0 /* TLViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TLViewController.m; sourceTree = "<group>"; };
+		DB7476E317596179007EBDF0 /* TLAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLAlertView.h; sourceTree = "<group>"; };
+		DB7476E417596179007EBDF0 /* TLAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLAlertView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB5EE8AE17597B6000DC9F4C /* QuartzCore.framework in Frameworks */,
 				DB7476C11759614A007EBDF0 /* UIKit.framework in Frameworks */,
 				DB7476C31759614A007EBDF0 /* Foundation.framework in Frameworks */,
 				DB7476C51759614A007EBDF0 /* CoreGraphics.framework in Frameworks */,
@@ -56,6 +62,7 @@
 		DB7476B41759614A007EBDF0 = {
 			isa = PBXGroup;
 			children = (
+				DB5EE8AD17597B6000DC9F4C /* QuartzCore.framework */,
 				DB7476C61759614A007EBDF0 /* TLAlertView */,
 				DB7476BF1759614A007EBDF0 /* Frameworks */,
 				DB7476BE1759614A007EBDF0 /* Products */,
@@ -88,6 +95,8 @@
 				DB7476D81759614A007EBDF0 /* MainStoryboard.storyboard */,
 				DB7476DB1759614A007EBDF0 /* TLViewController.h */,
 				DB7476DC1759614A007EBDF0 /* TLViewController.m */,
+				DB7476E317596179007EBDF0 /* TLAlertView.h */,
+				DB7476E417596179007EBDF0 /* TLAlertView.m */,
 				DB7476C71759614A007EBDF0 /* Supporting Files */,
 			);
 			path = TLAlertView;
@@ -177,6 +186,7 @@
 				DB7476CD1759614A007EBDF0 /* main.m in Sources */,
 				DB7476D11759614A007EBDF0 /* TLAppDelegate.m in Sources */,
 				DB7476DD1759614A007EBDF0 /* TLViewController.m in Sources */,
+				DB7476E517596179007EBDF0 /* TLAlertView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,6 +309,7 @@
 				DB7476E21759614A007EBDF0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
