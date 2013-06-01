@@ -32,7 +32,7 @@ typedef enum {
 
 @implementation TLAlertView
 #pragma mark - Initializer
-- (id)initWithTitle:(NSString *)title message:(NSString *)message inView:(UIView *)view cancelButtonTitle:(NSString *)cancelButton confirmButton:(NSString *)confirmButton {
+- (TLAlertView *)initWithTitle:(NSString *)title message:(NSString *)message inView:(UIView *)view cancelButtonTitle:(NSString *)cancelButton confirmButton:(NSString *)confirmButton {
     if(self = [super initWithFrame:CGRectMake(CGRectGetMinX(view.frame) + 20, CGRectGetMinY(view.frame) - 175, CGRectGetWidth(view.frame) - 40, 150)]) {
         _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.bounds) + 10, CGRectGetMinY(self.bounds) + 10, CGRectGetWidth(self.bounds) - 20, 24)];
         _titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:24];
@@ -111,16 +111,18 @@ typedef enum {
 #pragma mark - dismiss
 - (void)executeCompletionBlock:(UIButton *)sender {
     CATransform3D transformation = CATransform3DIdentity;
-    CATransform3D xRotation = CATransform3DMakeRotation((CGFloat)(180 * M_PI/ 180.0), 1.0, 0, 0);
-    CATransform3D yRotation = CATransform3DMakeRotation((CGFloat)(0 * M_PI/ 180.0), 0.0, 1.0, 0);
-    CATransform3D zRotation = CATransform3DMakeRotation((CGFloat)(-130 * M_PI/ 180.0), 0.0, 0, 1.0);
+    CGFloat degree = (self.TLAnimationType == TLAnimationType3D) ? 180.0 : 0.0;
+    CATransform3D xRotation = CATransform3DMakeRotation(degree * M_PI/ 180.0, 1.0, 0, 0);
+    CATransform3D yRotation = CATransform3DMakeRotation(0.0 * M_PI/ 180.0, 0.0, 1.0, 0);
+    CATransform3D zRotation = CATransform3DMakeRotation(-130.0 * M_PI/ 180.0, 0.0, 0, 1.0);
     CATransform3D xYRotation = CATransform3DConcat(xRotation, yRotation);
     CATransform3D xyZRotation = CATransform3DConcat(xYRotation, zRotation);
     CATransform3D translation = CATransform3DMakeTranslation(0, CGRectGetMaxY(self.viewToShowIn.bounds), 1.0);
 
     CATransform3D concatenatedTransformation = CATransform3DConcat(xyZRotation, translation);
     CATransform3D final = CATransform3DConcat(concatenatedTransformation, transformation);
-    final.m34 = -.0045;
+    if(self.TLAnimationType == TLAnimationType3D)
+        final.m34 = -.0045;
 
     [UIView animateWithDuration:kDismissAnimationDuration delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         self.layer.transform = final;

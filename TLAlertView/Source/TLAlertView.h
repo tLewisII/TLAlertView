@@ -8,16 +8,30 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TLAlertView : UIView
-typedef void ((^TLCompletionBlock)()); //Used as the completion block
+///Animation styles
+typedef enum {
+    TLAnimationType3D,
+    tLAnimationTypeHinge
+}TLAnimationType;
 
-//Must have a non null cancel button title,, but null confirm is ok.
+@interface TLAlertView : UIView
+
+///Used as the completion block
+typedef void ((^TLCompletionBlock)()); 
+
+///Convenience initializer, must have a non null cancel button title,, but null confirm is ok.
 + (TLAlertView *)__attribute__((nonnull(1, 2, 3, 5))) showInView:(UIView *)view withTitle:(NSString *)title message:(NSString *)message confirmButtonTitle:(NSString *)confirm cancelButtonTitle:(NSString *)cancel;
 
-//easy one shot call to handle both confirm or cancel buttons, either can be nil;
+///Normal initializer
+- (TLAlertView *)__attribute__((nonnull(1, 2, 3, 4))) initWithTitle:(NSString *)title message:(NSString *)message inView:(UIView *)view cancelButtonTitle:(NSString *)cancelButton confirmButton:(NSString *)confirmButton;
+
+///easy one shot call to handle both confirm or cancel buttons, either can be nil;
 - (void)handleCancel:(TLCompletionBlock)cancelBlock handleConfirm:(TLCompletionBlock)confirmBlock;
 
-//Presents the alert in the view that was passed in
+///Presents the alert in the view that was passed in
 - (void)show;
+
+///Choose which animation type, a 3D effect or a simple 2D hinge effect
+@property(nonatomic)NSUInteger TLAnimationType;
 
 @end
