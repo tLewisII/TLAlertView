@@ -2,7 +2,7 @@
 A simple replacement for UIAlertView with block based completion methods and a 3D dismiss animation.<br><br>
 <h2>Installation</h2>
 <hr>
-The preferred method is <a href="www.cocoapods.org">cocoapods</a>, or you can just drop in TLAlertView.h and .m and include the QuartzCore framework
+The preferred method is cocoapods, www.cocoapods.org, or you can just drop in TLAlertView.h and .m and include the QuartzCore framework
 <h2>Usage</h2>
 <hr>
 +showInView:withTitle:message:confirmButtonTitle:cancelButtonTitle:<br>
