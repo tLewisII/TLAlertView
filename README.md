@@ -11,8 +11,8 @@ The preferred method is cocoapods, www.cocoapods.org, which you would then `#imp
 `-handleCancel:handleConfirm:`<br>
 `-show`<br>
 and thats it!<br>
-You can also specify the type of animation using the `TLAnimationType` property, or just ignore it and use the default animation.
-
+You can also specify the type of animation using the `TLAnimationType` property, or just ignore it and use the default animation.<br>
+All of the colors are able to be customized as well, and also respond to `UI_APPEARANCE_SELECTOR`<br>
 Use as a replacement for UIAlertView wherever you need it.<br><br>
 
 
