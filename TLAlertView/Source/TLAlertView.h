@@ -31,6 +31,27 @@ typedef void ((^TLCompletionBlock)());
 ///Presents the alert in the view that was passed in
 - (void)show;
 
+///The background color of the view
+@property(strong,nonatomic)UIColor *viewColor UI_APPEARANCE_SELECTOR;
+
+///The color of the border
+@property(strong,nonatomic)UIColor *borderColor; UI_APPEARANCE_SELECTOR
+
+///The color of the buttons
+@property(strong,nonatomic)UIColor *buttonColor; UI_APPEARANCE_SELECTOR
+
+///The color of the title label
+@property(strong,nonatomic)UIColor *titleColor; UI_APPEARANCE_SELECTOR
+
+///The color of the message label
+@property(strong,nonatomic)UIColor *messageColor; UI_APPEARANCE_SELECTOR
+
+///The color of the confirm button text
+@property(strong,nonatomic)UIColor *confirmTextColor; UI_APPEARANCE_SELECTOR
+
+///The color of the cancel button text
+@property(strong,nonatomic)UIColor *cancelTextColor; UI_APPEARANCE_SELECTOR
+
 ///Choose which animation type, a 3D effect or a simple 2D hinge effect
 @property(nonatomic)NSUInteger TLAnimationType;
 

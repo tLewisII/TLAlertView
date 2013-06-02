@@ -34,11 +34,19 @@ typedef enum {
 #pragma mark - Initializer
 - (TLAlertView *)initWithTitle:(NSString *)title message:(NSString *)message inView:(UIView *)view cancelButtonTitle:(NSString *)cancelButton confirmButton:(NSString *)confirmButton {
     if(self = [super initWithFrame:CGRectMake(CGRectGetMinX(view.frame) + 20, CGRectGetMinY(view.frame) - 175, CGRectGetWidth(view.frame) - 40, 150)]) {
+        _titleColor = [UIColor whiteColor];
+        _messageColor = [UIColor whiteColor];
+        _confirmTextColor = [UIColor whiteColor];
+        _cancelTextColor = [UIColor whiteColor];
+        _buttonColor = [UIColor colorWithRed:0.000 green:0.502 blue:1.000 alpha:1.000];
+        _viewColor = [UIColor colorWithRed:0.174 green:0.182 blue:0.173 alpha:1.000];
+        _borderColor = [UIColor whiteColor];
+        
         _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.bounds) + 10, CGRectGetMinY(self.bounds) + 10, CGRectGetWidth(self.bounds) - 20, 24)];
         _titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:24];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
         _titleLabel.backgroundColor = [UIColor clearColor];
-        _titleLabel.textColor = [UIColor whiteColor];
+        _titleLabel.textColor = _titleColor;
         _titleLabel.adjustsFontSizeToFitWidth = YES;
 
         _messageLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.bounds) + 10, CGRectGetMaxY(_titleLabel.frame) + 5, CGRectGetWidth(self.bounds) - 20, 48)];
@@ -46,19 +54,19 @@ typedef enum {
         _messageLabel.textAlignment = NSTextAlignmentCenter;
         _messageLabel.backgroundColor = [UIColor clearColor];
         _messageLabel.numberOfLines = 0;
-        _messageLabel.textColor = [UIColor whiteColor];
+        _messageLabel.textColor = _messageColor;
         _messageLabel.adjustsFontSizeToFitWidth = YES;
 
         if(cancelButton && confirmButton) {
             _cancelButton = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.bounds) + 10, CGRectGetMaxY(self.bounds) - 54, (CGRectGetWidth(self.bounds) / 2) - 20, 44)];
-            _cancelButton.backgroundColor = [UIColor colorWithRed:0.000 green:0.502 blue:1.000 alpha:1.000];
+            _cancelButton.backgroundColor = _buttonColor;
             _cancelButton.tag = kCancelButtonTag;
             _cancelButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-BoldItalic" size:20];
             _cancelButton.titleLabel.adjustsFontSizeToFitWidth = YES;
             _cancelButton.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 5);
 
             _confirmButton = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.bounds) - (CGRectGetWidth(self.bounds) / 2) + 10, CGRectGetMaxY(self.bounds) - 54, (CGRectGetWidth(self.bounds) / 2) - 20, 44)];
-            _confirmButton.backgroundColor = [UIColor colorWithRed:0.000 green:0.502 blue:1.000 alpha:1.000];
+            _confirmButton.backgroundColor = _buttonColor;
             _confirmButton.tag = kConfirmButtonTag;
             _confirmButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-BoldItalic" size:20];
             _cancelButton.titleLabel.adjustsFontSizeToFitWidth = YES;
@@ -66,7 +74,7 @@ typedef enum {
         }
         else {
             _cancelButton = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.bounds) + 10, CGRectGetMaxY(self.bounds) - 54, CGRectGetWidth(self.bounds) - 20, 44)];
-            _cancelButton.backgroundColor = [UIColor colorWithRed:0.000 green:0.502 blue:1.000 alpha:1.000];
+            _cancelButton.backgroundColor = _buttonColor;
             _cancelButton.tag = kCancelButtonTag;
             _cancelButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-BoldItalic" size:20];
             _cancelButton.titleLabel.adjustsFontSizeToFitWidth = YES;
@@ -110,8 +118,9 @@ typedef enum {
 }
 #pragma mark - dismiss
 - (void)executeCompletionBlock:(UIButton *)sender {
-    CATransform3D transformation = CATransform3DIdentity;
     CGFloat degree = (self.TLAnimationType == TLAnimationType3D) ? 180.0 : 0.0;
+    
+    CATransform3D transformation = CATransform3DIdentity;
     CATransform3D xRotation = CATransform3DMakeRotation(degree * M_PI/ 180.0, 1.0, 0, 0);
     CATransform3D yRotation = CATransform3DMakeRotation(0.0 * M_PI/ 180.0, 0.0, 1.0, 0);
     CATransform3D zRotation = CATransform3DMakeRotation(-130.0 * M_PI/ 180.0, 0.0, 0, 1.0);
@@ -138,7 +147,6 @@ typedef enum {
         }];
         [self removeFromSuperview];
     }];
-
 }
 #pragma mark - set completion blocks
 - (void)handleCancel:(TLCompletionBlock)cancelBlock handleConfirm:(TLCompletionBlock)confirmBlock {
@@ -153,13 +161,22 @@ CGRect rectFor1PxStroke(CGRect rect) {
 - (void)drawRect:(CGRect)rect {
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGRect inset = CGRectInset(self.bounds, 2, 2);
-    UIColor *rectColor = [UIColor colorWithRed:0.174 green:0.182 blue:0.173 alpha:1.000];
+    
     CGContextSaveGState(context);
-
-    CGContextSetFillColorWithColor(context, rectColor.CGColor);
+    CGContextSetFillColorWithColor(context, self.viewColor.CGColor);
     CGContextFillRect(context, self.bounds);
     CGContextRestoreGState(context);
-    CGContextSetStrokeColorWithColor(context, [UIColor whiteColor].CGColor);
+    
+    CGContextSetStrokeColorWithColor(context, self.borderColor.CGColor);
     CGContextStrokeRect(context, rectFor1PxStroke(inset));
+}
+#pragma mark - layout subviews
+-(void)layoutSubviews {
+    self.confirmButton.backgroundColor = self.buttonColor;
+    self.cancelButton.backgroundColor = self.buttonColor;
+    self.titleLabel.textColor = self.titleColor;
+    self.messageLabel.textColor = self.messageColor;
+    [self.cancelButton setTitleColor:self.cancelTextColor forState:UIControlStateNormal];
+    [self.confirmButton setTitleColor:self.confirmTextColor forState:UIControlStateNormal];
 }
 @end
