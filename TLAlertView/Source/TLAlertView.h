@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 
 ///Animation styles
-typedef enum {
+typedef NS_ENUM(NSUInteger, TLAnimationType) {
     TLAnimationType3D,
     tLAnimationTypeHinge
-}TLAnimationType;
+};
 
 @interface TLAlertView : UIView
 

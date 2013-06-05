@@ -5,17 +5,17 @@
 //  Created by Terry Lewis II on 5/31/13.
 //  Copyright (c) 2013 Terry Lewis. All rights reserved.
 //
-#define kPresentationAnimationDuration .5
+#define kPresentationAnimationDuration .4
 #define kDismissAnimationDuration .4
 
 #import "TLAlertView.h"
 #import <QuartzCore/QuartzCore.h>
 
 //tag the buttons to perform the correct completion block
-typedef enum {
+typedef NS_ENUM(NSUInteger, buttonTags) {
     kCancelButtonTag = 100,
     kConfirmButtonTag = 101,
-} buttonTags;
+};
 
 @interface TLAlertView () {
     TLCompletionBlock cancelCompletionBlock;

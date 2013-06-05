@@ -62,7 +62,6 @@
 		DB7476B41759614A007EBDF0 = {
 			isa = PBXGroup;
 			children = (
-				DB5EE8AD17597B6000DC9F4C /* QuartzCore.framework */,
 				DB7476C61759614A007EBDF0 /* TLAlertView */,
 				DB7476BF1759614A007EBDF0 /* Frameworks */,
 				DB7476BE1759614A007EBDF0 /* Products */,
@@ -80,6 +79,7 @@
 		DB7476BF1759614A007EBDF0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DB5EE8AD17597B6000DC9F4C /* QuartzCore.framework */,
 				DB7476C01759614A007EBDF0 /* UIKit.framework */,
 				DB7476C21759614A007EBDF0 /* Foundation.framework */,
 				DB7476C41759614A007EBDF0 /* CoreGraphics.framework */,
