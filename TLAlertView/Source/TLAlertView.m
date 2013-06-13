@@ -7,7 +7,7 @@
 //
 #define kPresentationAnimationDuration .4
 #define kDismissAnimationDuration .4
-
+#define degToRadians(x) (x * M_PI / 180.0f)
 #import "TLAlertView.h"
 #import <QuartzCore/QuartzCore.h>
 
@@ -121,9 +121,9 @@ typedef NS_ENUM(NSUInteger, buttonTags) {
     CGFloat degree = (self.TLAnimationType == TLAnimationType3D) ? 180.0 : 0.0;
     
     CATransform3D transformation = CATransform3DIdentity;
-    CATransform3D xRotation = CATransform3DMakeRotation(degree * M_PI/ 180.0, 1.0, 0, 0);
-    CATransform3D yRotation = CATransform3DMakeRotation(0.0 * M_PI/ 180.0, 0.0, 1.0, 0);
-    CATransform3D zRotation = CATransform3DMakeRotation(-130.0 * M_PI/ 180.0, 0.0, 0, 1.0);
+    CATransform3D xRotation = CATransform3DMakeRotation(degToRadians(degree), 1.0, 0, 0);
+    CATransform3D yRotation = CATransform3DMakeRotation(degToRadians(0), 0.0, 1.0, 0);
+    CATransform3D zRotation = CATransform3DMakeRotation(degToRadians(-130), 0.0, 0, 1.0);
     CATransform3D xYRotation = CATransform3DConcat(xRotation, yRotation);
     CATransform3D xyZRotation = CATransform3DConcat(xYRotation, zRotation);
     CATransform3D translation = CATransform3DMakeTranslation(0, CGRectGetMaxY(self.viewToShowIn.bounds), 1.0);
