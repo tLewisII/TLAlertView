@@ -8,9 +8,9 @@
 #define kPresentationAnimationDuration .4
 #define kDismissAnimationDuration .4
 #define degToRadians(x) (x * M_PI / 180.0f)
+
 #import "TLAlertView.h"
 #import <QuartzCore/QuartzCore.h>
-
 //tag the buttons to perform the correct completion block
 typedef NS_ENUM(NSUInteger, buttonTags) {
     kCancelButtonTag = 100,
@@ -41,7 +41,7 @@ typedef NS_ENUM(NSUInteger, buttonTags) {
         _buttonColor = [UIColor colorWithRed:0.000 green:0.502 blue:1.000 alpha:1.000];
         _viewColor = [UIColor colorWithRed:0.174 green:0.182 blue:0.173 alpha:1.000];
         _borderColor = [UIColor whiteColor];
-        
+
         _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.bounds) + 10, CGRectGetMinY(self.bounds) + 10, CGRectGetWidth(self.bounds) - 20, 24)];
         _titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:24];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -119,7 +119,7 @@ typedef NS_ENUM(NSUInteger, buttonTags) {
 #pragma mark - dismiss
 - (void)executeCompletionBlock:(UIButton *)sender {
     CGFloat degree = (self.TLAnimationType == TLAnimationType3D) ? 180.0 : 0.0;
-    
+
     CATransform3D transformation = CATransform3DIdentity;
     CATransform3D xRotation = CATransform3DMakeRotation(degToRadians(degree), 1.0, 0, 0);
     CATransform3D yRotation = CATransform3DMakeRotation(degToRadians(0), 0.0, 1.0, 0);
@@ -150,8 +150,8 @@ typedef NS_ENUM(NSUInteger, buttonTags) {
 }
 #pragma mark - set completion blocks
 - (void)handleCancel:(TLCompletionBlock)cancelBlock handleConfirm:(TLCompletionBlock)confirmBlock {
-    cancelCompletionBlock = cancelBlock;
-    confirmCompletionBlock = confirmBlock;
+    cancelCompletionBlock = [cancelBlock copy];
+    confirmCompletionBlock = [confirmBlock copy];
 }
 #pragma mark - drawing
 CGRect rectFor1PxStroke(CGRect rect) {
@@ -161,17 +161,17 @@ CGRect rectFor1PxStroke(CGRect rect) {
 - (void)drawRect:(CGRect)rect {
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGRect inset = CGRectInset(self.bounds, 2, 2);
-    
+
     CGContextSaveGState(context);
     CGContextSetFillColorWithColor(context, self.viewColor.CGColor);
     CGContextFillRect(context, self.bounds);
     CGContextRestoreGState(context);
-    
+
     CGContextSetStrokeColorWithColor(context, self.borderColor.CGColor);
     CGContextStrokeRect(context, rectFor1PxStroke(inset));
 }
 #pragma mark - layout subviews
--(void)layoutSubviews {
+- (void)layoutSubviews {
     self.confirmButton.backgroundColor = self.buttonColor;
     self.cancelButton.backgroundColor = self.buttonColor;
     self.titleLabel.textColor = self.titleColor;
