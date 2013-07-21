@@ -10,8 +10,8 @@
 
 ///Animation styles
 typedef NS_ENUM(NSUInteger, TLAnimationType) {
-    TLAnimationType3D,
-    tLAnimationTypeHinge
+    tLAnimationTypeHinge,
+    TLAnimationType3D
 };
 
 @interface TLAlertView : UIView
