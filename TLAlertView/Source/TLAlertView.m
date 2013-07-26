@@ -42,43 +42,58 @@ typedef NS_ENUM(NSUInteger, buttonTags) {
         _viewColor = [UIColor colorWithRed:0.174 green:0.182 blue:0.173 alpha:1.000];
         _borderColor = [UIColor whiteColor];
 
-        _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.bounds) + 10, CGRectGetMinY(self.bounds) + 10, CGRectGetWidth(self.bounds) - 20, 24)];
-        _titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:24];
-        _titleLabel.textAlignment = NSTextAlignmentCenter;
-        _titleLabel.backgroundColor = [UIColor clearColor];
-        _titleLabel.textColor = _titleColor;
-        _titleLabel.adjustsFontSizeToFitWidth = YES;
+        _titleLabel = ({
+            UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.bounds) + 10, CGRectGetMinY(self.bounds) + 10, CGRectGetWidth(self.bounds) - 20, 24)];
+            label.font = [UIFont fontWithName:@"Helvetica-Bold" size:24];
+            label.textAlignment = NSTextAlignmentCenter;
+            label.backgroundColor = [UIColor clearColor];
+            label.textColor = _titleColor;
+            label.adjustsFontSizeToFitWidth = YES;
+            label;
+        });
 
-        _messageLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.bounds) + 10, CGRectGetMaxY(_titleLabel.frame) + 5, CGRectGetWidth(self.bounds) - 20, 48)];
-        _messageLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:18];
-        _messageLabel.textAlignment = NSTextAlignmentCenter;
-        _messageLabel.backgroundColor = [UIColor clearColor];
-        _messageLabel.numberOfLines = 0;
-        _messageLabel.textColor = _messageColor;
-        _messageLabel.adjustsFontSizeToFitWidth = YES;
+        _messageLabel = ({
+            UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.bounds) + 10, CGRectGetMaxY(_titleLabel.frame) + 5, CGRectGetWidth(self.bounds) - 20, 48)];
+            label.font = [UIFont fontWithName:@"Helvetica Neue" size:18];
+            label.textAlignment = NSTextAlignmentCenter;
+            label.backgroundColor = [UIColor clearColor];
+            label.numberOfLines = 0;
+            label.textColor = _messageColor;
+            label.adjustsFontSizeToFitWidth = YES;
+            label;
+        });
 
         if(cancelButton && confirmButton) {
-            _cancelButton = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.bounds) + 10, CGRectGetMaxY(self.bounds) - 54, (CGRectGetWidth(self.bounds) / 2) - 20, 44)];
-            _cancelButton.backgroundColor = _buttonColor;
-            _cancelButton.tag = kCancelButtonTag;
-            _cancelButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-BoldItalic" size:20];
-            _cancelButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-            _cancelButton.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 5);
+            _cancelButton = ({
+                UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.bounds) + 10, CGRectGetMaxY(self.bounds) - 54, (CGRectGetWidth(self.bounds) / 2) - 20, 44)];
+                button.backgroundColor = _buttonColor;
+                button.tag = kCancelButtonTag;
+                button.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-BoldItalic" size:20];
+                button.titleLabel.adjustsFontSizeToFitWidth = YES;
+                button.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 5);
+                button;
+            });
 
-            _confirmButton = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.bounds) - (CGRectGetWidth(self.bounds) / 2) + 10, CGRectGetMaxY(self.bounds) - 54, (CGRectGetWidth(self.bounds) / 2) - 20, 44)];
-            _confirmButton.backgroundColor = _buttonColor;
-            _confirmButton.tag = kConfirmButtonTag;
-            _confirmButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-BoldItalic" size:20];
-            _cancelButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-            _confirmButton.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 5);
+            _confirmButton = ({
+                UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.bounds) - (CGRectGetWidth(self.bounds) / 2) + 10, CGRectGetMaxY(self.bounds) - 54, (CGRectGetWidth(self.bounds) / 2) - 20, 44)];
+                button.backgroundColor = _buttonColor;
+                button.tag = kConfirmButtonTag;
+                button.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-BoldItalic" size:20];
+                button.titleLabel.adjustsFontSizeToFitWidth = YES;
+                button.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 5);
+                button;
+            });
         }
         else {
-            _cancelButton = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.bounds) + 10, CGRectGetMaxY(self.bounds) - 54, CGRectGetWidth(self.bounds) - 20, 44)];
-            _cancelButton.backgroundColor = _buttonColor;
-            _cancelButton.tag = kCancelButtonTag;
-            _cancelButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-BoldItalic" size:20];
-            _cancelButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-            _cancelButton.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 5);
+            _cancelButton = ({
+                UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.bounds) + 10, CGRectGetMaxY(self.bounds) - 54, CGRectGetWidth(self.bounds) - 20, 44)];
+                button.backgroundColor = _buttonColor;
+                button.tag = kCancelButtonTag;
+                button.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-BoldItalic" size:20];
+                button.titleLabel.adjustsFontSizeToFitWidth = YES;
+                button.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 5);
+                button;
+            });
         }
 
         self.layer.edgeAntialiasingMask = kCALayerLeftEdge | kCALayerRightEdge;
@@ -120,16 +135,18 @@ typedef NS_ENUM(NSUInteger, buttonTags) {
 - (void)executeCompletionBlock:(UIButton *)sender {
     CGFloat degree = (self.TLAnimationType == TLAnimationType3D) ? 180.0 : 0.0;
 
-    CATransform3D transformation = CATransform3DIdentity;
-    CATransform3D xRotation = CATransform3DMakeRotation(degToRadians(degree), 1.0, 0, 0);
-    CATransform3D yRotation = CATransform3DMakeRotation(degToRadians(0), 0.0, 1.0, 0);
-    CATransform3D zRotation = CATransform3DMakeRotation(degToRadians(-130), 0.0, 0, 1.0);
-    CATransform3D xYRotation = CATransform3DConcat(xRotation, yRotation);
-    CATransform3D xyZRotation = CATransform3DConcat(xYRotation, zRotation);
-    CATransform3D translation = CATransform3DMakeTranslation(0, CGRectGetMaxY(self.viewToShowIn.bounds), 1.0);
-
-    CATransform3D concatenatedTransformation = CATransform3DConcat(xyZRotation, translation);
-    CATransform3D final = CATransform3DConcat(concatenatedTransformation, transformation);
+    CATransform3D final = ({
+        CATransform3D transformation = CATransform3DIdentity;
+        CATransform3D xRotation = CATransform3DMakeRotation(degToRadians(degree), 1.0, 0, 0);
+        CATransform3D yRotation = CATransform3DMakeRotation(degToRadians(0), 0.0, 1.0, 0);
+        CATransform3D zRotation = CATransform3DMakeRotation(degToRadians(-130), 0.0, 0, 1.0);
+        CATransform3D xYRotation = CATransform3DConcat(xRotation, yRotation);
+        CATransform3D xyZRotation = CATransform3DConcat(xYRotation, zRotation);
+        CATransform3D translation = CATransform3DMakeTranslation(0, CGRectGetMaxY(self.viewToShowIn.bounds), 1.0);
+        
+        CATransform3D concatenatedTransformation = CATransform3DConcat(xyZRotation, translation);
+        CATransform3DConcat(concatenatedTransformation, transformation);
+    });
     if(self.TLAnimationType == TLAnimationType3D)
         final.m34 = -.0045;
 
