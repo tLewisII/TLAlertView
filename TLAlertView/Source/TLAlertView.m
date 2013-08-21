@@ -11,6 +11,7 @@
 
 #import "TLAlertView.h"
 #import <QuartzCore/QuartzCore.h>
+
 //tag the buttons to perform the correct completion block
 typedef NS_ENUM(NSUInteger, buttonTags) {
     kCancelButtonTag = 100,
@@ -33,7 +34,8 @@ typedef NS_ENUM(NSUInteger, buttonTags) {
 @implementation TLAlertView
 #pragma mark - Initializer
 - (TLAlertView *)initWithTitle:(NSString *)title message:(NSString *)message inView:(UIView *)view cancelButtonTitle:(NSString *)cancelButton confirmButton:(NSString *)confirmButton {
-    if(self = [super initWithFrame:CGRectMake(CGRectGetMinX(view.frame) + 20, CGRectGetMinY(view.frame) - 175, CGRectGetWidth(view.frame) - 40, 150)]) {
+    if(self = [super init]) {
+        self.translatesAutoresizingMaskIntoConstraints = NO;
         _titleColor = [UIColor whiteColor];
         _messageColor = [UIColor whiteColor];
         _confirmTextColor = [UIColor whiteColor];
@@ -42,76 +44,296 @@ typedef NS_ENUM(NSUInteger, buttonTags) {
         _viewColor = [UIColor colorWithRed:0.174 green:0.182 blue:0.173 alpha:1.000];
         _borderColor = [UIColor whiteColor];
 
+        [self addConstraints:@[
+                [NSLayoutConstraint
+                        constraintWithItem:self
+                                 attribute:NSLayoutAttributeWidth
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:nil
+                                 attribute:NSLayoutAttributeNotAnAttribute
+                                multiplier:1.0
+                                  constant:280],
+                [NSLayoutConstraint
+                        constraintWithItem:self
+                                 attribute:NSLayoutAttributeHeight
+                                 relatedBy:NSLayoutRelationGreaterThanOrEqual
+                                    toItem:nil
+                                 attribute:NSLayoutAttributeNotAnAttribute
+                                multiplier:1.0
+                                  constant:150]
+        ]];
         _titleLabel = ({
-            UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.bounds) + 10, CGRectGetMinY(self.bounds) + 10, CGRectGetWidth(self.bounds) - 20, 24)];
+            UILabel *label = [[UILabel alloc]init];
+            label.text = title;
+            label.numberOfLines = 1;
+            label.preferredMaxLayoutWidth = 260;
+            label.translatesAutoresizingMaskIntoConstraints = NO;
+            label.adjustsFontSizeToFitWidth = YES;
             label.font = [UIFont fontWithName:@"Helvetica-Bold" size:24];
             label.textAlignment = NSTextAlignmentCenter;
             label.backgroundColor = [UIColor clearColor];
             label.textColor = _titleColor;
-            label.adjustsFontSizeToFitWidth = YES;
+            [self addSubview:label];
+            [self addConstraints:@[
+                    [NSLayoutConstraint
+                            constraintWithItem:label
+                                     attribute:NSLayoutAttributeTop
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self
+                                     attribute:NSLayoutAttributeTop
+                                    multiplier:1.0
+                                      constant:10],
+                    [NSLayoutConstraint
+                            constraintWithItem:label
+                                     attribute:NSLayoutAttributeCenterX
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self
+                                     attribute:NSLayoutAttributeCenterX
+                                    multiplier:1.0
+                                      constant:0]
+            ]];
+            [label addConstraints:@[
+                    [NSLayoutConstraint
+                            constraintWithItem:label
+                                     attribute:NSLayoutAttributeWidth
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:nil
+                                     attribute:NSLayoutAttributeNotAnAttribute
+                                    multiplier:1.0
+                                      constant:260],
+                    [NSLayoutConstraint
+                            constraintWithItem:label
+                                     attribute:NSLayoutAttributeHeight
+                                     relatedBy:NSLayoutRelationLessThanOrEqual
+                                        toItem:nil
+                                     attribute:NSLayoutAttributeNotAnAttribute
+                                    multiplier:1.0
+                                      constant:30]
+            ]];
             label;
         });
 
         _messageLabel = ({
-            UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.bounds) + 10, CGRectGetMaxY(_titleLabel.frame) + 5, CGRectGetWidth(self.bounds) - 20, 48)];
+            UILabel *label = [[UILabel alloc]init];
+            label.text = message;
+            label.translatesAutoresizingMaskIntoConstraints = NO;
+            label.preferredMaxLayoutWidth = 260;
             label.font = [UIFont fontWithName:@"Helvetica Neue" size:18];
             label.textAlignment = NSTextAlignmentCenter;
             label.backgroundColor = [UIColor clearColor];
             label.numberOfLines = 0;
             label.textColor = _messageColor;
-            label.adjustsFontSizeToFitWidth = YES;
+            [self addSubview:label];
+            [self addConstraints:@[
+                    [NSLayoutConstraint
+                            constraintWithItem:label
+                                     attribute:NSLayoutAttributeTop
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:_titleLabel
+                                     attribute:NSLayoutAttributeBottom
+                                    multiplier:1.0
+                                      constant:5],
+                    [NSLayoutConstraint
+                            constraintWithItem:label
+                                     attribute:NSLayoutAttributeCenterX
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self
+                                     attribute:NSLayoutAttributeCenterX
+                                    multiplier:1.0
+                                      constant:0],
+                    [NSLayoutConstraint
+                            constraintWithItem:label
+                                     attribute:NSLayoutAttributeBottom
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self
+                                     attribute:NSLayoutAttributeBottom
+                                    multiplier:1.0
+                                      constant:-64]
+            ]];
+            [label addConstraints:@[
+                    [NSLayoutConstraint
+                            constraintWithItem:label
+                                     attribute:NSLayoutAttributeWidth
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:nil
+                                     attribute:NSLayoutAttributeNotAnAttribute
+                                    multiplier:1.0
+                                      constant:260],
+                    [NSLayoutConstraint
+                            constraintWithItem:label
+                                     attribute:NSLayoutAttributeHeight
+                                     relatedBy:NSLayoutRelationLessThanOrEqual
+                                        toItem:nil
+                                     attribute:NSLayoutAttributeNotAnAttribute
+                                    multiplier:1.0
+                                      constant:75]
+            ]];
             label;
         });
 
         if(cancelButton && confirmButton) {
             _cancelButton = ({
-                UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.bounds) + 10, CGRectGetMaxY(self.bounds) - 54, (CGRectGetWidth(self.bounds) / 2) - 20, 44)];
+                UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+                button.translatesAutoresizingMaskIntoConstraints = NO;
                 button.backgroundColor = _buttonColor;
+                [button setTitle:cancelButton forState:UIControlStateNormal];
                 button.tag = kCancelButtonTag;
                 button.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-BoldItalic" size:20];
                 button.titleLabel.adjustsFontSizeToFitWidth = YES;
                 button.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 5);
+                [button addTarget:self action:@selector(executeCompletionBlock:) forControlEvents:UIControlEventTouchUpInside];
+                [self addSubview:button];
+                [self addConstraints:@[
+                        [NSLayoutConstraint
+                                constraintWithItem:button
+                                         attribute:NSLayoutAttributeBottom
+                                         relatedBy:NSLayoutRelationEqual
+                                            toItem:self
+                                         attribute:NSLayoutAttributeBottom
+                                        multiplier:1.0
+                                          constant:-10],
+                        [NSLayoutConstraint
+                                constraintWithItem:button
+                                         attribute:NSLayoutAttributeLeft
+                                         relatedBy:NSLayoutRelationEqual
+                                            toItem:self
+                                         attribute:NSLayoutAttributeLeft
+                                        multiplier:1.0
+                                          constant:10]
+                ]];
+                [button addConstraints:@[
+                        [NSLayoutConstraint
+                                constraintWithItem:button
+                                         attribute:NSLayoutAttributeWidth
+                                         relatedBy:NSLayoutRelationEqual
+                                            toItem:nil
+                                         attribute:NSLayoutAttributeNotAnAttribute
+                                        multiplier:1.0 constant:(260 / 2) - 10],
+                        [NSLayoutConstraint
+                                constraintWithItem:button
+                                         attribute:NSLayoutAttributeHeight
+                                         relatedBy:NSLayoutRelationEqual
+                                            toItem:nil
+                                         attribute:NSLayoutAttributeNotAnAttribute
+                                        multiplier:1.0
+                                          constant:44]
+                ]];
                 button;
             });
 
             _confirmButton = ({
-                UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.bounds) - (CGRectGetWidth(self.bounds) / 2) + 10, CGRectGetMaxY(self.bounds) - 54, (CGRectGetWidth(self.bounds) / 2) - 20, 44)];
+                UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+                button.translatesAutoresizingMaskIntoConstraints = NO;
                 button.backgroundColor = _buttonColor;
                 button.tag = kConfirmButtonTag;
                 button.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-BoldItalic" size:20];
                 button.titleLabel.adjustsFontSizeToFitWidth = YES;
                 button.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 5);
+                [button setTitle:confirmButton forState:UIControlStateNormal];
+                [button addTarget:self action:@selector(executeCompletionBlock:) forControlEvents:UIControlEventTouchUpInside];
+                [self addSubview:button];
+                [self addConstraints:@[
+                        [NSLayoutConstraint
+                                constraintWithItem:button
+                                         attribute:NSLayoutAttributeBottom
+                                         relatedBy:NSLayoutRelationEqual
+                                            toItem:self
+                                         attribute:NSLayoutAttributeBottom
+                                        multiplier:1.0
+                                          constant:-10],
+                        [NSLayoutConstraint
+                                constraintWithItem:button
+                                         attribute:NSLayoutAttributeRight
+                                         relatedBy:NSLayoutRelationEqual
+                                            toItem:self
+                                         attribute:NSLayoutAttributeRight
+                                        multiplier:1.0
+                                          constant:-10]
+                ]];
+                [button addConstraints:@[
+                        [NSLayoutConstraint
+                                constraintWithItem:button
+                                         attribute:NSLayoutAttributeWidth
+                                         relatedBy:NSLayoutRelationEqual
+                                            toItem:nil
+                                         attribute:NSLayoutAttributeNotAnAttribute
+                                        multiplier:1.0
+                                          constant:(260 / 2) - 10],
+                        [NSLayoutConstraint
+                                constraintWithItem:button
+                                         attribute:NSLayoutAttributeHeight
+                                         relatedBy:NSLayoutRelationEqual
+                                            toItem:nil
+                                         attribute:NSLayoutAttributeNotAnAttribute
+                                        multiplier:1.0
+                                          constant:44]
+                ]];
                 button;
             });
         }
         else {
             _cancelButton = ({
-                UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.bounds) + 10, CGRectGetMaxY(self.bounds) - 54, CGRectGetWidth(self.bounds) - 20, 44)];
+                UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+                button.translatesAutoresizingMaskIntoConstraints = NO;
                 button.backgroundColor = _buttonColor;
+                [button setTitle:cancelButton forState:UIControlStateNormal];
                 button.tag = kCancelButtonTag;
                 button.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-BoldItalic" size:20];
                 button.titleLabel.adjustsFontSizeToFitWidth = YES;
                 button.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 5);
+                [button addTarget:self action:@selector(executeCompletionBlock:) forControlEvents:UIControlEventTouchUpInside];
+                [self addSubview:button];
+                [self addConstraints:@[
+                        [NSLayoutConstraint
+                                constraintWithItem:button
+                                         attribute:NSLayoutAttributeTop
+                                         relatedBy:NSLayoutRelationEqual
+                                            toItem:_messageLabel
+                                         attribute:NSLayoutAttributeBottom
+                                        multiplier:1.0
+                                          constant:5],
+                        [NSLayoutConstraint
+                                constraintWithItem:button
+                                         attribute:NSLayoutAttributeCenterX
+                                         relatedBy:NSLayoutRelationEqual
+                                            toItem:self
+                                         attribute:NSLayoutAttributeCenterX
+                                        multiplier:1.0
+                                          constant:0],
+                        [NSLayoutConstraint
+                                constraintWithItem:button
+                                         attribute:NSLayoutAttributeBottom
+                                         relatedBy:NSLayoutRelationEqual
+                                            toItem:self
+                                         attribute:NSLayoutAttributeBottom
+                                        multiplier:1.0
+                                          constant:-10]
+                ]];
+                [button addConstraints:@[
+                        [NSLayoutConstraint
+                                constraintWithItem:button
+                                         attribute:NSLayoutAttributeWidth
+                                         relatedBy:NSLayoutRelationEqual
+                                            toItem:nil
+                                         attribute:NSLayoutAttributeNotAnAttribute
+                                        multiplier:1.0
+                                          constant:260],
+                        [NSLayoutConstraint
+                                constraintWithItem:button
+                                         attribute:NSLayoutAttributeHeight
+                                         relatedBy:NSLayoutRelationEqual
+                                            toItem:nil
+                                         attribute:NSLayoutAttributeNotAnAttribute
+                                        multiplier:1.0
+                                          constant:44]
+                ]];
                 button;
             });
         }
 
         self.layer.edgeAntialiasingMask = kCALayerLeftEdge | kCALayerRightEdge;
         self.backgroundColor = [UIColor clearColor];
-
         _viewToShowIn = view;
-        _titleLabel.text = title;
-        _messageLabel.text = message;
-        [_confirmButton setTitle:confirmButton forState:UIControlStateNormal];
-        [_cancelButton setTitle:cancelButton forState:UIControlStateNormal];
-        [_confirmButton addTarget:self action:@selector(executeCompletionBlock:) forControlEvents:UIControlEventTouchUpInside];
-        [_cancelButton addTarget:self action:@selector(executeCompletionBlock:) forControlEvents:UIControlEventTouchUpInside];
-
-        [self addSubview:_titleLabel];
-        [self addSubview:_messageLabel];
-        if(_confirmButton)
-            [self addSubview:_confirmButton];
-        [self addSubview:_cancelButton];
     }
     return self;
 }
@@ -126,11 +348,42 @@ typedef NS_ENUM(NSUInteger, buttonTags) {
         obj.userInteractionEnabled = NO;
     }];
     [self.viewToShowIn addSubview:self];
-    [UIView animateWithDuration:kPresentationAnimationDuration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        self.frame = CGRectMake(CGRectGetMinX(self.viewToShowIn.frame) + 20, CGRectGetMidY(self.viewToShowIn.frame) - 75, CGRectGetWidth(self.viewToShowIn.frame) - 40, 150);
-    }                completion:nil];
+    NSLayoutConstraint *top = [NSLayoutConstraint
+            constraintWithItem:self
+                     attribute:NSLayoutAttributeTop
+                     relatedBy:NSLayoutRelationGreaterThanOrEqual
+                        toItem:self.viewToShowIn
+                     attribute:NSLayoutAttributeTop
+                    multiplier:1.0
+                      constant:-250];
+    [self.viewToShowIn addConstraints:@[
+            [NSLayoutConstraint
+                    constraintWithItem:self
+                             attribute:NSLayoutAttributeCenterX
+                             relatedBy:NSLayoutRelationEqual
+                                toItem:self.viewToShowIn
+                             attribute:NSLayoutAttributeCenterX
+                            multiplier:1.0
+                              constant:0],
+            top
+    ]];
 
+    [self.viewToShowIn layoutSubviews];
+    [self.viewToShowIn removeConstraint:top];
+    [self.viewToShowIn addConstraint:[NSLayoutConstraint
+            constraintWithItem:self
+                     attribute:NSLayoutAttributeCenterY
+                     relatedBy:NSLayoutRelationEqual
+                        toItem:self.viewToShowIn
+                     attribute:NSLayoutAttributeCenterY
+                    multiplier:1.0
+                      constant:0]];
+
+    [UIView animateWithDuration:kPresentationAnimationDuration animations:^{
+        self.center = self.viewToShowIn.center;
+    }];
 }
+
 #pragma mark - dismiss
 - (void)executeCompletionBlock:(UIButton *)sender {
     CGFloat degree = (self.TLAnimationType == TLAnimationType3D) ? 180.0 : 0.0;
@@ -143,7 +396,7 @@ typedef NS_ENUM(NSUInteger, buttonTags) {
         CATransform3D xYRotation = CATransform3DConcat(xRotation, yRotation);
         CATransform3D xyZRotation = CATransform3DConcat(xYRotation, zRotation);
         CATransform3D translation = CATransform3DMakeTranslation(0, CGRectGetMaxY(self.viewToShowIn.bounds), 1.0);
-        
+
         CATransform3D concatenatedTransformation = CATransform3DConcat(xyZRotation, translation);
         CATransform3DConcat(concatenatedTransformation, transformation);
     });
@@ -189,6 +442,7 @@ CGRect rectFor1PxStroke(CGRect rect) {
 }
 #pragma mark - layout subviews
 - (void)layoutSubviews {
+    [super layoutSubviews];
     self.confirmButton.backgroundColor = self.buttonColor;
     self.cancelButton.backgroundColor = self.buttonColor;
     self.titleLabel.textColor = self.titleColor;
